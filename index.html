@@ -14,7 +14,7 @@
                     colors: {
                         primary: '#3ba1da',
                         secondary: '#52b946',
-                        accent: '#fdfcf0'
+                        accent: '#ffebbe'
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
@@ -26,20 +26,338 @@
     </script>
     <style>
         html { scroll-behavior: smooth; }
-        .product-card:hover .product-overlay { opacity: 1; }
+        .page-section { display: none; }
+        .page-section.active { display: block; }
+        .nav-link.active { color: #3ba1da; border-bottom: 2px solid #3ba1da; }
+        .product-card:hover { transform: translateY(-5px); }
+        input::placeholder, textarea::placeholder { color: #9ca3af; }
     </style>
 <script type="importmap">
 {
   "imports": {
+    "react-router-dom": "https://esm.sh/react-router-dom@^7.13.0",
     "react/": "https://esm.sh/react@^19.2.4/",
     "react": "https://esm.sh/react@^19.2.4",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "react-router-dom": "https://esm.sh/react-router-dom@^7.13.0"
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/"
   }
 }
 </script>
 </head>
-<body class="bg-white text-gray-900">
+<body class="bg-white text-gray-900 font-sans">
+    <!-- React Mount Point -->
     <div id="root"></div>
+
+    <!-- Static Version Wrapper (Visible only if React doesn't mount or as the source) -->
+    <div id="static-site">
+        <!-- Header -->
+        <header id="main-header" class="fixed w-full z-50 transition-all duration-300 bg-white shadow-sm py-4">
+            <div class="container mx-auto px-4 md:px-8 flex items-center justify-between">
+                <a href="#home" class="flex items-center" onclick="navigateTo('home')">
+                    <img src="https://hackwittechnologies.com/abeit_oil_mill/ABIET%20OIL%20MILLS%20.png" alt="Abeit Oil Mills" class="h-12 md:h-16">
+                </a>
+
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#home" onclick="navigateTo('home')" class="nav-link font-semibold hover:text-primary transition-colors py-2">Home</a>
+                    <a href="#about" onclick="navigateTo('about')" class="nav-link font-semibold hover:text-primary transition-colors py-2">About Us</a>
+                    <a href="#products" onclick="navigateTo('products')" class="nav-link font-semibold hover:text-primary transition-colors py-2">Products</a>
+                    <a href="#contact" onclick="navigateTo('contact')" class="nav-link font-semibold hover:text-primary transition-colors py-2">Contact Us</a>
+                </nav>
+
+                <button class="md:hidden p-2 text-gray-800" onclick="toggleMobileMenu()">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 absolute top-full left-0 w-full shadow-lg">
+                <div class="flex flex-col p-4 space-y-4">
+                    <a href="#home" onclick="navigateTo('home')" class="text-lg font-medium">Home</a>
+                    <a href="#about" onclick="navigateTo('about')" class="text-lg font-medium">About Us</a>
+                    <a href="#products" onclick="navigateTo('products')" class="text-lg font-medium">Products</a>
+                    <a href="#contact" onclick="navigateTo('contact')" class="text-lg font-medium">Contact Us</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Home Page -->
+        <section id="home" class="page-section active pt-0">
+            <div class="relative h-screen flex items-center justify-center overflow-hidden">
+                <div class="absolute inset-0 bg-[#f7fdfb]">
+                    <div class="absolute top-0 right-0 w-1/2 h-full bg-primary/5 rounded-bl-[200px]"></div>
+                    <div class="absolute bottom-0 left-0 w-1/3 h-2/3 bg-secondary/5 rounded-tr-[300px]"></div>
+                </div>
+                <div class="container mx-auto px-4 md:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="text-center lg:text-left">
+                        <span class="inline-block bg-secondary/10 text-secondary font-bold text-sm tracking-widest uppercase py-1 px-4 rounded-full mb-6">100% Cold Pressed & Natural</span>
+                        <h1 class="text-5xl md:text-7xl font-serif text-gray-900 leading-tight mb-8">The Essence of <br><span class="text-primary italic">Nature's Purity</span></h1>
+                        <p class="text-lg md:text-xl text-gray-600 mb-10 max-w-xl mx-auto lg:mx-0">Abeit Oil Mills brings you oils harvested with care and extracted through traditional cold-press methods to preserve every drop of goodness.</p>
+                        <div class="flex flex-col sm:flex-row justify-center lg:justify-start space-y-4 sm:space-y-0 sm:space-x-4">
+                            <a href="#products" onclick="navigateTo('products')" class="bg-primary text-white font-bold py-4 px-8 rounded-full shadow-lg hover:bg-opacity-90 transition-all hover:-translate-y-1 text-center">Explore Products</a>
+                            <a href="#about" onclick="navigateTo('about')" class="bg-white text-gray-800 border-2 border-gray-100 font-bold py-4 px-8 rounded-full hover:border-primary transition-all text-center">Our Story</a>
+                        </div>
+                    </div>
+                    <div class="hidden lg:block relative text-center">
+                        <img src="https://hackwittechnologies.com/oil_products/Amuthanal%20C1.png" alt="Featured Product" class="w-full max-w-md mx-auto drop-shadow-2xl transform rotate-3 hover:rotate-0 transition-transform duration-1000">
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-secondary/20 rounded-full blur-3xl -z-10"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured Products on Home -->
+            <div class="py-24 bg-gray-50 border-t border-gray-100">
+                <div class="container mx-auto px-4 md:px-8">
+                    <div class="flex flex-col md:flex-row justify-between items-end mb-16">
+                        <div class="max-w-xl text-center md:text-left">
+                            <h2 class="text-4xl font-serif text-gray-900 mb-4">Our Favorites</h2>
+                            <p class="text-gray-600">Hand-picked premium oils from our wide range of cold-pressed offerings.</p>
+                        </div>
+                        <a href="#products" onclick="navigateTo('products')" class="text-primary font-bold hover:underline mt-6 md:mt-0">View All Products &rarr;</a>
+                    </div>
+                    <div id="home-product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <!-- Content injected by JS renderProducts() -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonials Section -->
+            <section class="py-24 bg-accent">
+                <div class="container mx-auto px-4 md:px-8">
+                    <div class="text-center max-w-3xl mx-auto mb-16">
+                        <h2 class="text-4xl font-serif text-gray-900 mb-6">What Our Customers Say</h2>
+                        <p class="text-gray-600">Join thousands of happy families who have switched to the pure goodness of Abeit Oil Mills.</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+                            <div class="text-secondary mb-4 flex">⭐⭐⭐⭐⭐</div>
+                            <p class="text-gray-700 italic mb-6">"The cold-pressed sesame oil from Abeit is absolutely authentic. The aroma takes me back to my grandmother's kitchen."</p>
+                            <h4 class="font-bold text-gray-900">Priya Sundar</h4>
+                            <p class="text-sm text-gray-500">Home Chef</p>
+                        </div>
+                        <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+                            <div class="text-secondary mb-4 flex">⭐⭐⭐⭐⭐</div>
+                            <p class="text-gray-700 italic mb-6">"I've tried many brands, but Abeit's groundnut oil is noticeably purer. It's become a staple in my healthy diet plan."</p>
+                            <h4 class="font-bold text-gray-900">Rajesh Kumar</h4>
+                            <p class="text-sm text-gray-500">Fitness Enthusiast</p>
+                        </div>
+                        <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+                            <div class="text-secondary mb-4 flex">⭐⭐⭐⭐⭐</div>
+                            <p class="text-gray-700 italic mb-6">"Finding chemical-free oil was a priority for my family. Abeit Oil Mills provides the purity I can trust for my kids."</p>
+                            <h4 class="font-bold text-gray-900">Meera Krishnan</h4>
+                            <p class="text-sm text-gray-500">Mother of Two</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- About Page -->
+        <section id="about" class="page-section pt-24">
+            <div class="bg-accent py-20 text-center">
+                <div class="container mx-auto px-4">
+                    <h1 class="text-5xl font-serif text-gray-900 mb-6">Our Journey</h1>
+                    <p class="text-gray-600 text-lg max-w-2xl mx-auto">From the fertile fields of Tamil Nadu to your kitchen, Abeit Oil Mills is on a mission to bring back the traditional ways of healthy living.</p>
+                </div>
+            </div>
+            <div class="py-24 bg-white container mx-auto px-4 md:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                    <div>
+                        <h2 class="text-3xl font-serif text-gray-900 mb-8 border-l-4 border-secondary pl-6">The Abeit Philosophy</h2>
+                        <div class="space-y-6 text-gray-600 text-lg leading-relaxed">
+                            <p>Abeit Oil Mills was founded with a singular vision: to restore the purity of oils used in Indian households. Located in the heart of Tenkasi, we leverage the natural richness of the region to source the finest seeds.</p>
+                            <p>We specialize in the <strong>Cold Press method</strong>, an ancient technique where oil is extracted at low temperatures without any chemical solvents. This ensures that the natural aroma, color, and most importantly, the nutritional value are preserved perfectly.</p>
+                            <p>Our commitment goes beyond just business; it's about community health. We believe that what you put into your body defines your longevity and vitality.</p>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <img src="https://picsum.photos/id/42/1200/900" alt="Extraction Process" class="rounded-3xl shadow-2xl">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Page -->
+        <section id="products" class="page-section pt-24">
+            <div class="bg-primary/5 py-20 text-center">
+                <div class="container mx-auto px-4">
+                    <h1 class="text-5xl font-serif text-gray-900 mb-6">Our Collection</h1>
+                    <p class="text-gray-600 text-lg max-w-2xl mx-auto">Discover our comprehensive range of oils, each crafted with the same dedication to purity and health.</p>
+                </div>
+            </div>
+            <div class="py-16 bg-white container mx-auto px-4 md:px-8">
+                <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                    <!-- Content injected by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Page -->
+        <section id="contact" class="page-section pt-24">
+            <div class="bg-secondary/5 py-20 text-center">
+                <div class="container mx-auto px-4">
+                    <h1 class="text-5xl font-serif text-gray-900 mb-6">Let's Connect</h1>
+                    <p class="text-gray-600 text-lg max-w-2xl mx-auto">Have questions about our products or want to inquire about wholesale? We're here to help.</p>
+                </div>
+            </div>
+            <div class="py-24 bg-white container mx-auto px-4 md:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-20">
+                    <div class="bg-white p-8 md:p-12 rounded-3xl shadow-2xl border border-gray-50">
+                        <h2 class="text-3xl font-serif text-gray-900 mb-8">Send us a Message</h2>
+                        <form class="space-y-6" onsubmit="event.preventDefault(); alert('Thank you! Your enquiry has been received.')">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Full Name</label>
+                                    <input type="text" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-gray-900 focus:bg-white focus:border-primary outline-none transition-all" placeholder="John Doe">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
+                                    <input type="email" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-gray-900 focus:bg-white focus:border-primary outline-none transition-all" placeholder="john@example.com">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Subject</label>
+                                <input type="text" id="enquiry-subject" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-gray-900 focus:bg-white focus:border-primary outline-none transition-all" placeholder="Enquiry for products">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Message</label>
+                                <textarea class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-gray-900 focus:bg-white focus:border-primary outline-none transition-all h-32" placeholder="Tell us how we can help you..."></textarea>
+                            </div>
+                            <button class="w-full bg-primary text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-primary/30 transition-all hover:-translate-y-1">Send Message</button>
+                        </form>
+                    </div>
+                    <div>
+                        <h2 class="text-3xl font-serif text-gray-900 mb-10">Visit Our Office</h2>
+                        <div class="space-y-8">
+                            <div class="flex">
+                                <div class="bg-primary/10 p-3 rounded-xl mr-4 h-fit text-primary">📍</div>
+                                <div><h3 class="font-bold">Address</h3><p class="text-gray-600">4/364 Rhenius Street, Nallur P.O, Alangulam Taluk, Tenkasi, Tamilnadu - 627853.</p></div>
+                            </div>
+                            <div class="flex">
+                                <div class="bg-secondary/10 p-3 rounded-xl mr-4 h-fit text-secondary">📞</div>
+                                <div><h3 class="font-bold">Phone</h3><p class="text-gray-600">+91 90804 21713</p></div>
+                            </div>
+                            <div class="flex">
+                                <div class="bg-primary/10 p-3 rounded-xl mr-4 h-fit text-primary">✉️</div>
+                                <div><h3 class="font-bold">Email</h3><p class="text-gray-600">abeit.oilmills@gmail.com</p></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-gray-50 border-t border-gray-100 pt-16 pb-8">
+            <div class="container mx-auto px-4 md:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                    <div>
+                        <img src="https://hackwittechnologies.com/abeit_oil_mill/ABIET%20OIL%20MILLS%20.png" alt="Abeit Oil Mills" class="h-16 mb-6">
+                        <div class="flex space-x-4">
+                            <a href="https://facebook.com" target="_blank" class="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:text-primary transition-all shadow-sm">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg>
+                            </a>
+                            <a href="https://instagram.com" target="_blank" class="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:text-secondary transition-all shadow-sm">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                            </a>
+                            <a href="https://linkedin.com" target="_blank" class="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:text-primary transition-all shadow-sm">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                    <div><h4 class="font-bold mb-6">Links</h4><ul class="space-y-4 text-gray-600"><li><a href="#home" onclick="navigateTo('home')" class="hover:text-primary">Home</a></li><li><a href="#about" onclick="navigateTo('about')" class="hover:text-primary">About Us</a></li><li><a href="#products" onclick="navigateTo('products')" class="hover:text-primary">Products</a></li></ul></div>
+                    <div class="col-span-2 text-gray-600"><h4 class="font-bold text-gray-900 mb-6">Contact</h4><p>4/364 Rhenius Street, Nallur P.O, Tenkasi.</p><p>+91 90804 21713</p><p>abeit.oilmills@gmail.com</p></div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const products = [
+            { name: "Aairampoo", image: "https://hackwittechnologies.com/oil_products/Aairampoo%201.png", cat: "Herbal" },
+            { name: "Amuthanal Coconut Oil", image: "https://hackwittechnologies.com/oil_products/Amuthanal%20C1.png", cat: "Cooking" },
+            { name: "Amuthanal Groundnut Oil", image: "https://hackwittechnologies.com/oil_products/Amuthanal%20G%201.png", cat: "Cooking" },
+            { name: "Amuthanal Sesame Oil", image: "https://hackwittechnologies.com/oil_products/Amuthanal%20S%201.png", cat: "Cooking" },
+            { name: "Atricai Sun Flower Oil", image: "https://hackwittechnologies.com/oil_products/Atricai%201.png", cat: "Cooking" },
+            { name: "Iluamuthu Coconut Oil", image: "https://hackwittechnologies.com/oil_products/Iluamuthu%20C%201.png", cat: "Premium" },
+            { name: "Iluamuthu Groundnut Oil", image: "https://hackwittechnologies.com/oil_products/Iluamuthu%20G%20%201.png", cat: "Premium" },
+            { name: "Iluamuthu Sesame Oil", image: "https://hackwittechnologies.com/oil_products/Iluamuthu%20S%201.png", cat: "Premium" },
+            { name: "Muthaalai Mustard Oil", image: "https://hackwittechnologies.com/oil_products/Muthaalai%201.png", cat: "Cooking" },
+            { name: "Nalvalam Castor Oil", image: "https://hackwittechnologies.com/oil_products/Nalvalam%201.png", cat: "Wellness" },
+            { name: "Paamarai Lamp Oil", image: "https://hackwittechnologies.com/oil_products/Paamarai%201.png", cat: "Lamp" },
+            { name: "Poonthagai Palm Oil", image: "https://hackwittechnologies.com/oil_products/Poonthagai%201.png", cat: "Cooking" },
+            { name: "Sempathil Olive Oil", image: "https://hackwittechnologies.com/oil_products/Sempathil%201.png", cat: "Premium" },
+            { name: "Tavariti Lamp Oil", image: "https://hackwittechnologies.com/oil_products/Tavariti%201.png", cat: "Lamp" },
+            { name: "Tenkanni Virgin Coconut Oil", image: "https://hackwittechnologies.com/oil_products/Tenkanni%201.png", cat: "Premium" },
+            { name: "Tholmarai Olive Oil", image: "https://hackwittechnologies.com/oil_products/Tholmarai%201.png", cat: "Premium" },
+            { name: "Venpariti Sun Flower Oil", image: "https://hackwittechnologies.com/oil_products/Venpariti%201.png", cat: "Cooking" }
+        ];
+
+        function navigateTo(pageId, productName = null) {
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+            const target = document.getElementById(pageId);
+            if(target) target.classList.add('active');
+            
+            document.querySelectorAll('.nav-link').forEach(l => {
+                if(l.getAttribute('href') === '#' + pageId) l.classList.add('active');
+                else l.classList.remove('active');
+            });
+
+            if (productName) {
+                const subjectInput = document.getElementById('enquiry-subject');
+                if(subjectInput) subjectInput.value = `Enquiry for ${productName}`;
+            }
+
+            window.scrollTo(0, 0);
+            const menu = document.getElementById('mobile-menu');
+            if(menu) menu.classList.add('hidden');
+        }
+
+        function createProductCard(p) {
+            return `
+                <div class="product-card group bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col h-full">
+                    <div class="relative aspect-square overflow-hidden bg-gray-50 p-6 flex items-center justify-center">
+                        <img src="${p.image}" alt="${p.name}" class="w-full h-full object-contain transform group-hover:scale-110 transition-transform duration-700">
+                        <span class="absolute top-4 left-4 bg-secondary text-white text-[10px] uppercase font-bold px-3 py-1 rounded-full tracking-wider">${p.cat}</span>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <h3 class="text-lg font-bold text-gray-900 group-hover:text-primary transition-colors mb-2">${p.name}</h3>
+                        <p class="text-sm text-gray-500 flex-grow">Cold-pressed for maximum nutrition and natural flavor.</p>
+                        <div class="mt-4 pt-4 border-t border-gray-50">
+                            <a href="#contact" onclick="navigateTo('contact', '${p.name}')" class="text-primary font-bold text-sm flex items-center hover:text-secondary transition-colors">
+                                Get Enquiry
+                                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderProducts() {
+            const mainGrid = document.getElementById('product-grid');
+            const homeGrid = document.getElementById('home-product-grid');
+            if (mainGrid) mainGrid.innerHTML = products.map(p => createProductCard(p)).join('');
+            if (homeGrid) homeGrid.innerHTML = products.slice(0, 4).map(p => createProductCard(p)).join('');
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            if(menu) menu.classList.toggle('hidden');
+        }
+
+        // Init Logic
+        renderProducts();
+        const initialHash = window.location.hash.replace('#', '') || 'home';
+        navigateTo(initialHash);
+        
+        // Hide static content if React successfully mounts
+        const rootObserver = new MutationObserver(() => {
+            const root = document.getElementById('root');
+            if (root && root.children.length > 0) {
+                document.getElementById('static-site').style.display = 'none';
+                rootObserver.disconnect();
+            }
+        });
+        rootObserver.observe(document.getElementById('root'), { childList: true });
+    </script>
 </body>
 </html>
